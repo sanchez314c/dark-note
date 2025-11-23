@@ -1,0 +1,257 @@
+{
+  "name": "dark-sticky-notes",
+  "version": "1.0.0",
+  "description": "A dark, elegant sticky notes application for your desktop",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron . --no-sandbox",
+    "dev": "electron . --dev --no-sandbox",
+    "test": "echo \"No tests yet\" && exit 0",
+    "dist": "electron-builder --mac --win --linux",
+    "dist:all": "electron-builder --mac --win --linux --publish=never",
+    "dist:current": "electron-builder",
+    "dist:mac": "electron-builder --mac",
+    "dist:mac:all": "electron-builder --mac --x64 --arm64",
+    "dist:mac:store": "electron-builder --mac --config.mac.target=mas",
+    "dist:win": "electron-builder --win",
+    "dist:win:all": "electron-builder --win --x64 --ia32 --arm64",
+    "dist:win:msi": "electron-builder --win --config.win.target=msi",
+    "dist:win:portable": "electron-builder --win --config.win.target=portable",
+    "dist:linux": "electron-builder --linux",
+    "dist:linux:all": "electron-builder --linux --x64 --arm64 --armv7l",
+    "dist:linux:appimage": "electron-builder --linux --config.linux.target=AppImage",
+    "dist:linux:deb": "electron-builder --linux --config.linux.target=deb",
+    "dist:linux:rpm": "electron-builder --linux --config.linux.target=rpm",
+    "dist:linux:snap": "electron-builder --linux --config.linux.target=snap",
+    "dist:linux:tar": "electron-builder --linux --config.linux.target=tar.xz",
+    "dist:maximum": "electron-builder --mac --win --linux --x64 --arm64 --ia32 --armv7l",
+    "pack": "electron-builder --dir",
+    "postinstall": "electron-builder install-app-deps",
+    "bloat-check": "./scripts/bloat-check.sh",
+    "temp-clean": "./scripts/temp-cleanup.sh",
+    "build-clean": "./scripts/compile-build-dist.sh --no-temp-clean --no-bloat-check"
+  },
+  "keywords": ["sticky notes", "notes", "productivity", "desktop", "electron"],
+  "author": {
+    "name": "J. Michaels",
+    "email": "dev@darknote.app"
+  },
+  "license": "MIT",
+  "type": "commonjs",
+  "homepage": "https://github.com/sanchez314c/dark-sticky-notes",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sanchez314c/dark-sticky-notes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sanchez314c/dark-sticky-notes/issues"
+  },
+  "devDependencies": {
+    "electron": "^37.4.0",
+    "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "uuid": "^11.1.0"
+  },
+  "build": {
+    "appId": "com.darkstickynotes.app",
+    "productName": "Dark Sticky Notes",
+    "copyright": "Copyright © 2026 ${author}",
+    "directories": {
+      "output": "dist",
+      "buildResources": "resources"
+    },
+    "files": [
+      "main.js",
+      "renderer.js",
+      "preload.js",
+      "note.html",
+      "package.json",
+      "!**/*.ts",
+      "!**/*.map",
+      "!**/*.md",
+      "!**/test/**",
+      "!**/tests/**",
+      "!**/__tests__/**",
+      "!**/spec/**",
+      "!**/docs/**",
+      "!**/README*",
+      "!**/CHANGELOG*",
+      "!**/LICENSE*",
+      "!**/.git/**",
+      "!**/.vscode/**",
+      "!**/node_modules/.cache/**",
+      "!**/build-temp/**",
+      "!**/scripts/**"
+    ],
+    "compression": "maximum",
+    "mac": {
+      "category": "public.app-category.productivity",
+      "icon": "resources/icon.icns",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "identity": null,
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64", "universal"]
+        },
+        {
+          "target": "zip",
+          "arch": ["x64", "arm64", "universal"]
+        },
+        {
+          "target": "pkg",
+          "arch": ["x64", "arm64", "universal"]
+        }
+      ]
+    },
+    "mas": {
+      "category": "public.app-category.productivity",
+      "icon": "resources/icon.icns",
+      "hardenedRuntime": true,
+      "target": {
+        "target": "mas",
+        "arch": ["x64", "arm64"]
+      }
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file"
+        }
+      ]
+    },
+    "win": {
+      "icon": "resources/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64", "ia32", "arm64"]
+        },
+        {
+          "target": "msi",
+          "arch": ["x64", "ia32", "arm64"]
+        },
+        {
+          "target": "zip",
+          "arch": ["x64", "ia32", "arm64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64", "ia32", "arm64"]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "installerIcon": "resources/icon.ico",
+      "uninstallerIcon": "resources/icon.ico",
+      "installerHeaderIcon": "resources/icon.ico",
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Dark Sticky Notes"
+    },
+    "msi": {
+      "oneClick": false,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "portable": {
+      "requestExecutionLevel": "user"
+    },
+    "linux": {
+      "icon": "resources/icons",
+      "category": "Utility",
+      "executableArgs": ["--no-sandbox"],
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": ["x64", "arm64", "armv7l"]
+        },
+        {
+          "target": "deb",
+          "arch": ["x64", "arm64", "armv7l"]
+        },
+        {
+          "target": "rpm",
+          "arch": ["x64", "arm64", "armv7l"]
+        },
+        {
+          "target": "snap",
+          "arch": ["x64", "arm64", "armv7l"]
+        },
+        {
+          "target": "tar.xz",
+          "arch": ["x64", "arm64", "armv7l"]
+        },
+        {
+          "target": "tar.gz",
+          "arch": ["x64", "arm64", "armv7l"]
+        }
+      ],
+      "desktop": {
+        "entry": {
+          "StartupNotify": "true",
+          "Encoding": "UTF-8",
+          "Icon": "dark-sticky-notes",
+          "Type": "Application",
+          "Categories": "Utility;"
+        }
+      }
+    },
+    "deb": {
+      "depends": [
+        "libgtk-3-0",
+        "libnotify4",
+        "libnss3",
+        "libxss1",
+        "libxtst6",
+        "xdg-utils",
+        "libatspi2.0-0",
+        "libuuid1",
+        "libsecret-1-0"
+      ]
+    },
+    "rpm": {
+      "depends": [
+        "gtk3",
+        "libnotify",
+        "nss",
+        "libXScrnSaver",
+        "libXtst",
+        "xdg-utils",
+        "at-spi2-core",
+        "libuuid",
+        "libsecret"
+      ]
+    },
+    "snap": {
+      "grade": "stable",
+      "summary": "Dark sticky notes for your desktop",
+      "confinement": "strict",
+      "base": "core20"
+    },
+    "appImage": {
+      "license": "LICENSE"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "sanchez314c",
+        "repo": "dark-sticky-notes"
+      }
+    ]
+  }
+}
