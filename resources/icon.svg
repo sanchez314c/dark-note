@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <!-- Dark note body gradient -->
+    <linearGradient id="noteBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a2a3d"/>
+      <stop offset="50%" stop-color="#1e1e2e"/>
+      <stop offset="100%" stop-color="#16161f"/>
+    </linearGradient>
+    <!-- Fold gradient -->
+    <linearGradient id="fold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3a3a52"/>
+      <stop offset="100%" stop-color="#252538"/>
+    </linearGradient>
+    <!-- Fold shadow -->
+    <linearGradient id="foldShadow" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a0a12" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#0a0a12" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Subtle top edge highlight -->
+    <linearGradient id="topEdge" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f0a030" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#f0a030" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Ambient glow behind the note -->
+    <radialGradient id="ambientGlow" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#f0a030" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#f0a030" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Drop shadow filter -->
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="20" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <!-- Subtle inner glow -->
+    <filter id="innerGlow" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#f0a030" flood-opacity="0.12" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background ambient glow -->
+  <rect x="0" y="0" width="1024" height="1024" fill="url(#ambientGlow)"/>
+
+  <!-- Main note body with shadow -->
+  <path d="M 112 72 L 752 72 L 912 72 L 912 752 L 752 912 L 112 912 Z"
+        fill="url(#noteBody)" filter="url(#shadow)" rx="12"/>
+
+  <!-- Subtle border -->
+  <path d="M 112 72 L 912 72 L 912 752 L 752 912 L 112 912 Z"
+        fill="none" stroke="#3a3a52" stroke-width="1.5" rx="12"/>
+
+  <!-- Top accent strip (amber) -->
+  <rect x="112" y="72" width="800" height="6" rx="3" fill="url(#topEdge)"/>
+
+  <!-- Fold triangle -->
+  <path d="M 752 912 L 752 752 L 912 752 Z" fill="url(#fold)"/>
+  <!-- Fold crease line -->
+  <path d="M 752 912 L 912 752" fill="none" stroke="#4a4a62" stroke-width="1"/>
+  <!-- Fold shadow overlay -->
+  <path d="M 752 912 L 752 752 L 912 752 Z" fill="url(#foldShadow)"/>
+
+  <!-- Text lines (representing note content) -->
+  <g opacity="0.25" stroke="none">
+    <rect x="180" y="200" width="520" height="4" rx="2" fill="#8888aa"/>
+    <rect x="180" y="270" width="580" height="4" rx="2" fill="#8888aa"/>
+    <rect x="180" y="340" width="440" height="4" rx="2" fill="#8888aa"/>
+    <rect x="180" y="410" width="560" height="4" rx="2" fill="#8888aa"/>
+    <rect x="180" y="480" width="380" height="4" rx="2" fill="#8888aa"/>
+    <rect x="180" y="550" width="500" height="4" rx="2" fill="#8888aa"/>
+    <rect x="180" y="620" width="320" height="4" rx="2" fill="#8888aa"/>
+  </g>
+
+  <!-- Small amber dot accent (like a pin/marker) -->
+  <circle cx="160" cy="148" r="12" fill="#f0a030" opacity="0.8"/>
+  <circle cx="160" cy="148" r="6" fill="#ffc040" opacity="0.9"/>
+</svg>
